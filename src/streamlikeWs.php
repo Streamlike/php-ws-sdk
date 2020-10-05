@@ -53,6 +53,11 @@ class streamlikeWs
             'languages',
             'countries',
             'getStreamlikeVersion',
+            'manifest',
+            'nowplaying',
+            'podcast',
+            'resume',
+            'videositemap',
         ];
     }
 

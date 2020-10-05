@@ -24,6 +24,11 @@ Or with composer:
 - `languages`
 - `countries`
 - `getStreamlikeVersion`
+- `manifest`
+- `nowplaying`
+- `podcast`
+- `resume`
+- `videositemap`
 
 ## Samples
 
@@ -94,7 +99,7 @@ try {
       'playlist_id' => '983e6509573f4849',
       'lng' => 'fr',
       'pagesize' => 6,
-      'orderby' => 'date',
+      'orderby' => 'creationdate',
       'sortorder' => 'down'
     );
 
@@ -103,26 +108,6 @@ try {
     // handle exception, log, retry...
 }
 ```
-
-### GET Media with statistics
-
-```php
-<?php
-
-try {
-    $ws = new streamlikeWs('https://cdn.streamlike.com', 'xml');
-    $params = array(
-      'media_id' => '4df5ede70f252c07',
-      'rate' => 'true',
-    );
-
-    $content = $ws->getResult('media', $params, streamlikeWs::RESULTTYPE_RAW);
-} catch (\Exception $e) {
-    // handle exception, log, retry...
-}
-
-```
-
 
 ### GET Media with statistics
 
@@ -158,3 +143,97 @@ try {
 } catch (\Exception $e) {
     // handle exception, log, retry...
 }
+```
+
+### GET all media file details 
+
+
+```php
+<?php
+
+try {
+    $ws = new streamlikeWs('https://cdn.streamlike.com');
+    $params = array(
+      'media_id' => '4df5ede70f252c07',
+    );
+
+    $content = $ws->getResult('manifest', $params);
+} catch (\Exception $e) {
+    // handle exception, log, retry...
+}
+```
+
+### GET count of users who are currently watching the media 
+
+
+```php
+<?php
+
+try {
+    $ws = new streamlikeWs('https://cdn.streamlike.com');
+    $params = array(
+      'media_id' => '4df5ede70f252c07',
+    );
+
+    $content = $ws->getResult('nowplaying', $params);
+} catch (\Exception $e) {
+    // handle exception, log, retry...
+}
+```
+
+### GET Podcast feed
+
+
+```php
+<?php
+
+try {
+    $ws = new streamlikeWs('https://cdn.streamlike.com');
+    $params = array(
+      'playlist_id' => '983e6509573f4849',
+      'lng' => 'fr',
+      'orderby' => 'lastupdateddate',
+    );
+
+    $content = $ws->getResult('podcast', $params);
+} catch (\Exception $e) {
+    // handle exception, log, retry...
+}
+```
+
+### GET Media related to a given media
+
+
+```php
+<?php
+
+try {
+    $ws = new streamlikeWs('https://cdn.streamlike.com');
+    $params = array(
+      'media_id' => '4df5ede70f252c07',
+      'pagesize' => 4,
+    );
+
+    $content = $ws->getResult('related', $params);
+} catch (\Exception $e) {
+    // handle exception, log, retry...
+}
+```
+
+### GET Google video sitemap feed
+
+
+```php
+<?php
+
+try {
+    $ws = new streamlikeWs('https://cdn.streamlike.com');
+    $params = array(
+      'company_id' => '48c6eab371919246',
+    );
+
+    $content = $ws->getResult('videositemap', $params);
+} catch (\Exception $e) {
+    // handle exception, log, retry...
+}
+```
