@@ -81,8 +81,8 @@ class streamlikeWs
         $url = $this->getQuery($service, $params);
 
         // Get url content
-        $fh = fopen($url, 'r');
-        $content = stream_get_contents($fh);
+        $fh = @fopen($url, 'rb');
+        $content = $fh ? stream_get_contents($fh) : false;
         if (!$content) {
             throw new Exception('URL cannot be accessed !');
         }
