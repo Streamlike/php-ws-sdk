@@ -12,36 +12,24 @@ class streamlikeWs
     const RESULTTYPE_RAW = 1; // Raw result: xml or json
     const RESULTTYPE_ARRAY = 2; // Array result: xml or json serialized object
 
-    const VERSION_V2 = 1;
-
-    private $server;
     private $ws_url;
-    private $version;
     private $format;
     private $allowed_services;
 
     /**
-     * @param $server
+     * @param string $server
      * @param string $format
-     * @param int    $version
      *
      * @throws Exception
      */
-    public function __construct($server, $format = 'json', $version = self::VERSION_V2)
+    public function __construct($server = 'https://cdn.streamlike.com', $format = 'json')
     {
-        if (!$server) {
-            throw new InvalidArgumentException('A server url is required !');
-        }
+        $this->setServer($server);
 
         if ('xml' !== $format && 'json' !== $format) {
             throw new InvalidArgumentException('This format is not allowed !');
         }
-
-        $this->server = $server;
         $this->format = $format;
-        $this->version = $version;
-
-        $this->ws_url = $server.'/ws/';
 
         $this->allowed_services = [
             'playlists',
@@ -59,6 +47,21 @@ class streamlikeWs
             'resume',
             'videositemap',
         ];
+    }
+
+    /**
+     * @param string $server
+     * @return self
+     */
+    public function setServer($server)
+    {
+        if (!$server) {
+            throw new InvalidArgumentException('A server url is required !');
+        }
+
+        $this->ws_url = $server.'/ws/';
+
+        return $this;
     }
 
     /**
